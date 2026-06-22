@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>parcial-p3 Gastón G.</title>
+</head>
+<body>
+
+
+    <section class="login-registro-dual">
+        <div class="dual-container">
+            <div class="login-container">
+                <h2>Login</h2>
+                <form id="form-login">
+                    <div class="login-usuario-form">
+                        <input type="email" name="email" placeholder="email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="submit-login-container">
+                        <p id="login-error-msg"></p>
+                        <p id="login-success-msg"></p>
+                        <p id="login-loading-msg"></p>
+                        <button id="login-btn" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="registro-container">
+                <h2>Registro</h2>
+                <form id="form-registro">
+                    <div class="persona-fisica-form">
+                        <input type="text" name="nombre" placeholder="Nombre" required>
+                        <input type="text" name="apellido" placeholder="Apellido" required>
+                        <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+                        <input type="text" name="dni" placeholder="DNI" required>
+                    </div>
+
+                    <div class="usuario-form">
+                        <input type="text" name="nickname" placeholder="Nickname" required>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        <p id="registro-error-msg"></p>
+                        <p id="registro-success-msg"></p>
+                    </div>
+                
+                    <div class="rol-selection">
+                        <h3>Seleccionar Rol</h3>
+                        <input type="radio" name="rol" value="participante" checked> Participante
+                        <input type="radio" name="rol" value="organizador"> Organizador
+                    </div>
+
+                    <div class="condiciones">
+                        <input type="checkbox" name="aceptar_condiciones" id="terms-checkbox" required> 
+                        <label for="terms-checkbox">Acepto los términos y condiciones</label>
+                    </div>
+
+                    <div class="button-container">
+                        <p id="submit-success-msg"></p>
+                        <p id="submit-error-msg"></p>
+                        <p id="submit-loading-msg"></p>
+                        <button class="btn-submit" type="submit" id="submit-btn" disabled>Finalizar Registro</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>   
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
