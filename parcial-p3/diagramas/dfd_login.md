@@ -18,21 +18,19 @@ graph TD
     P1_2 -->|1. Mostrar 'Cargando...' en DOM| P1_3[1.2.3: Ejecutar fakeRequest con Async/Await]
     P1_3 -->|2. Simular Espera 1s| P1_4[1.2.4: Verificar Existencia del Usuario]
 
-    %% 3. CONTROL DE EXISTENCIA DE CUENTA (Consigna)
+    %% 3. CONTROL DE EXISTENCIA DE CUENTA
     P1_4 -->|Buscar por Email| D2
     D2 -->|Retornar Registro de Usuario| P1_4
     P1_4 --> C2{¿El Usuario Existe<br>y está ACTIVO?}
     C2 -->|No| Return_Err2([Mostrar en DOM: Credenciales Incorrectas])
 
     %% 4. COMPROBACIÓN DE CONTRASEÑA (Hasheada)
-    C2 -->|Sí| P1_5[1.2.5: Validar Contraseña con Hash Simulado]
+    C2 -->|Sí| P1_5[1.2.5: Validar Contraseña]
     P1_5 --> C3{¿Contraseña<br>Coincide?}
     C3 -->|No| Return_Err2
 
-    %% 5. LOGIN EXITOSO Y LECTURA DE ROL (Tu Persistencia)
-    C3 -->|Sí| P1_6[1.2.6: Recuperar Rol del Usuario]
-    D3 -->|Consultar Relación id_usuario| P1_6
-    P1_6 --> Success([Ocultar 'Cargando...' y Mostrar: Login Exitoso])
+    %% 5. LOGIN EXITOSO
+    C3 -->|Sí| Success([Ocultar 'Cargando...' y Mostrar: Login Exitoso])
 
     %% Embudo de Salidas (Mensajes en el DOM, sin alertas)
     Return_Err1 --> FIN([FIN])

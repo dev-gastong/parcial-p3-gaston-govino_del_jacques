@@ -23,35 +23,33 @@ graph TD
     C2 -->|Sí| Return_Err2([Mostrar en DOM: Email duplicado])
     C2 -->|No| P1_3[1.1.3: Iniciar Proceso Asíncrono fakeRequest]
 
-    %% 3. ASINCRONÍA Y ENCRIPCIÓN SIMULADA
+    %% 3. ASINCRONÍA 
     P1_3 -->|1. Mostrar 'Cargando...' en DOM| P1_4[1.1.4: Ejecutar fakeRequest con Async/Await]
-    P1_4 -->|2. Simular Espera 1s| P1_5[1.1.5: Simular Hash de Contraseña]
+    P1_4 -->|2. Simular Espera 1s| P1_5[1.1.5: Registrar Persona Física]
 
     %% 4. PERSISTENCIA EN LAS ENTIDADES
-    P1_5 -->|id_persona generado| P1_6[1.1.6: Registrar Persona Física]
-    P1_6 -->|Escribir: Nombre, Apellido, F. Nac, DNI| D1
+    P1_5 -->|Escribir: Nombre, Apellido, F. Nac, DNI| D1
     
-    P1_6 -->|id_persona_fisica como FK| P1_7[1.1.7: Registrar Cuenta Usuario]
-    P1_7 -->|Escribir: Nickname, Email, Password Hash, Estado=True| D2
+    P1_5 -->|id_persona_fisica como FK| P1_6[1.1.6: Registrar Cuenta Usuario]
+    P1_6 -->|Escribir: Nickname, Email, Password, Estado=True| D2
     
     %% 5. BIFURCACIÓN DEL ROL CONSULTANDO LA TABLA MAESTRO
-    P1_7 --> C_Rol{¿El rol seleccionado<br>es 'Participante'?}
+    P1_6 --> C_Rol{¿El rol seleccionado<br>es 'Participante'?}
     
-    C_Rol -->|Sí| P1_8A[1.1.8A: Buscar ID de Rol Participante]
-    D_Roles -->|Consultar metadata| P1_8A
-    P1_8A -->|Escribir Relación id_usuario + id_rol| D3
+    C_Rol -->|Sí| P1_7A[1.1.7A: Buscar ID de Rol Participante]
+    D_Roles -->|Consultar metadata| P1_7A
+    P1_7A -->|Escribir Relación id_usuario + id_rol| D3
     
-    C_Rol -->|No| P1_8B[1.1.8B: Buscar ID de Rol Organizador]
-    D_Roles -->|Consultar metadata| P1_8B
-    P1_8B -->|Escribir Relación id_usuario + id_rol| D3
+    C_Rol -->|No| P1_7B[1.1.7B: Buscar ID de Rol Organizador]
+    D_Roles -->|Consultar metadata| P1_7B
+    P1_7B -->|Escribir Relación id_usuario + id_rol| D3
 
     %% Fin del proceso
-    P1_8A --> Success
-    P1_8B --> Success
+    P1_7A --> Success
+    P1_7B --> Success
     Success([Ocultar 'Cargando...' y Mostrar: Registro Exitoso])
 
     %% Embudo de Salidas
     Return_Err1 --> FIN([FIN])
     Return_Err2 --> FIN
     Success --> FIN
-
