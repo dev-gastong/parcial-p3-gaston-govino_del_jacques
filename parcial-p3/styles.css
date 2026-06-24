@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Crucial para el Box Model */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8; /* Azul muy claro de fondo */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* --- Contenedor Principal (Dual Horizontal) --- */
+.login-registro-dual {
+    width: 100%;
+    max-width: 900px;
+}
+
+.dual-container {
+    display: flex;
+    flex-direction: row; /* Uno al lado del otro */
+    gap: 30px; /* Separación entre paneles */
+    width: 100%;
+}
+
+/* --- Paneles Individuales (Login y Registro) --- */
+.login-container, .registro-container {
+    flex: 1; /* Distribuye el espacio equitativamente (50% y 50%) */
+    background-color: #ffffff; /* Blanco */
+    padding: 30px;
+    border: 1px solid #d0e1fd; /* Borde azul sutil */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* --- Títulos --- */
+h2 {
+    color: #0056b3; /* Azul oscuro */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e1ecf4;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #0056b3;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* --- Formularios e Inputs --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Separación vertical de los elementos internos */
+}
+
+.login-usuario-form, .persona-fisica-form, .usuario-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input[type="text"],
+.input[type="email"],
+.input[type="password"],
+.input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Bordes redondeados pequeños para inputs */
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+/* Efecto Focus en Inputs */
+.input:focus {
+    border-color: #007bff; /* Azul vibrante al hacer click */
+}
+
+/* --- Secciones Especiales (Roles y Condiciones) --- */
+.rol-selection, .condiciones {
+    padding: 10px 0;
+}
+
+.condiciones {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label {
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* --- Botones --- */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff; /* Azul base */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+/* Estado deshabilitado (para el botón de registro que viene con 'disabled') */
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* --- Mensajes de feedback (Error/Éxito) --- */
+p[id$="-msg"] {
+    font-size: 0.85rem;
+    margin: 5px 0;
+}
+p[id*="error"] { color: #dc3545; } /* Rojo para errores */
+p[id*="success"] { color: #28a745; } /* Verde para éxito */
+p[id*="loading"] { color: #007bff; } /* Azul para carga */
+
+
+/* --- Responsivo básico --- */
+@media (max-width: 768px) {
+    .dual-container {
+        flex-direction: column; /* Se apilan solo si la pantalla es muy chica (celulares) */
+    }
+}

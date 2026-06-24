@@ -15,8 +15,8 @@
                 <h2>Login</h2>
                 <form id="form-login">
                     <div class="login-usuario-form">
-                        <input type="email" name="email" placeholder="email" required>
-                        <input type="password" name="password" placeholder="Password" required>
+                        <input class="input" type="email" name="email" placeholder="email" required>
+                        <input class="input" type="password" name="password" placeholder="Password" required>
                     </div>
                     <div class="submit-login-container">
                         <p id="login-error-msg"></p>
@@ -31,30 +31,30 @@
                 <h2>Registro</h2>
                 <form id="form-registro">
                     <div class="persona-fisica-form">
-                        <input type="text" name="nombre" placeholder="Nombre" required>
-                        <input type="text" name="apellido" placeholder="Apellido" required>
-                        <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
-                        <input type="text" name="dni" placeholder="DNI" required>
+                        <input class="input" type="text" name="nombre" placeholder="Nombre" required>
+                        <input class="input" type="text" name="apellido" placeholder="Apellido" required>
+                        <input class="input" type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+                        <input class="input" type="text" name="dni" placeholder="DNI" required>
                     </div>
 
                     <div class="usuario-form">
-                        <input type="text" name="nickname" placeholder="Nickname" required>
-                        <input type="email" name="email" placeholder="Email" required>
-                        <input type="password" name="password" placeholder="Password" required>
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        <input class="input" type="text" name="nickname" placeholder="Nickname" required>
+                        <input class="input" type="email" name="email" placeholder="Email" required>
+                        <input class="input" type="password" name="password" placeholder="Password" required>
+                        <input class="input" type="password" name="confirm_password" placeholder="Confirm Password" required>
                         <p id="registro-error-msg"></p>
                         <p id="registro-success-msg"></p>
                     </div>
                 
                     <div class="rol-selection">
                         <h3>Seleccionar Rol</h3>
-                        <input type="radio" name="rol" value="participante" checked> Participante
-                        <input type="radio" name="rol" value="organizador"> Organizador
+                        <input class="radio" type="radio" name="rol" value="participante" checked> Participante
+                        <input class="radio" type="radio" name="rol" value="organizador"> Organizador
                     </div>
 
                     <div class="condiciones">
-                        <input type="checkbox" name="aceptar_condiciones" id="terms-checkbox" required> 
-                        <label for="terms-checkbox">Acepto los términos y condiciones</label>
+                        <input class="input" type="checkbox" name="aceptar_condiciones" id="terms-checkbox" required> 
+                        <label class="label" for="terms-checkbox">Acepto los términos y condiciones</label>
                     </div>
 
                     <div class="button-container">

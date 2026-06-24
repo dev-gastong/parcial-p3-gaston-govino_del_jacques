@@ -79,29 +79,15 @@ formularioRegistro?.addEventListener('submit', (e) => {
 
 
 async function registrarUsuario(formularioRegistro) {
-
-    if (!confirmarContraseña()) {
-        registroError.textContent = 'Las contraseñas no coinciden';
-        return;
-    }
-
-    if (!validarCamposVacios()) {
-        return;
-    }
-
-    if(!validarEmail(formularioRegistro.email.value)){
-        return;
-    }
-    
-    if(!validarContraseña(formularioRegistro.password.value)) {
-        return;
-    }
-
-    if (!validarFechaNacimiento(new Date(formularioRegistro.fecha_nacimiento.value))) {
-        return;
-    }
-
     try {
+
+                // Validaciones
+        validarCamposVacios()
+        validarEmail(formularioRegistro.email.value)
+        validarEmailExistente(formularioRegistro.email.value)
+        validarContraseña(formularioRegistro.password.value)
+        confirmarContraseña()
+        validarFechaNacimiento(new Date(formularioRegistro.fecha_nacimiento.value))
 
         // Mostrar mensaje de "Cargando..."
         submitLoadingMensaje.style.color = "blue";
@@ -112,28 +98,33 @@ async function registrarUsuario(formularioRegistro) {
         const datosSimulados = { email: formularioRegistro.email.value };
         await fakeRequest(datosSimulados);
 
+
+        // Creacion del usuario a partir del formulario
         const nuevaPersona = crearPersona(formularioRegistro);
         const nuevaPersonaFisica = crearPersonaFisica(formularioRegistro, nuevaPersona);
         const nuevoUsuario = crearUsuario(formularioRegistro, nuevaPersonaFisica);
         const nuevoUsuarioRol = crearUsuarioRol(nuevoUsuario);
 
-
+        // Almacenamiento en localStorage
         guardarEnLocalStorage('Persona', nuevaPersona);
         guardarEnLocalStorage('Persona_Fisica', nuevaPersonaFisica);
         guardarEnLocalStorage('Usuario', nuevoUsuario);
         guardarEnLocalStorage('Usuario_Rol', nuevoUsuarioRol);
 
+        // Mensaje final
         submitLoadingMensaje.textContent = '';
         submitErrorMensaje.textContent = '';
         registroExito.textContent = 'Registro exitoso';
         registroExito.style.color = 'green';
 
+        // Reset del form
         formularioRegistro.reset();
 
     } catch (error) {
-        console.error('Error durante el registro:', error);
-        submitErrorMensaje.textContent = 'Ocurrió un error durante el registro. Por favor, inténtalo de nuevo.';
+        registroError.textContent = error.message; // Mostrará 'Email ya existe'
+        registroError.style.color = 'red';
     } finally {
+        submitLoadingMensaje.textContent = '';
         submitButton.disabled = false; // Habilita el botón después de intentar el registro
     }   
 
@@ -203,7 +194,8 @@ const confirmarContraseña = () => {
     const password = formularioRegistro.password.value;
     const confirmPassword = formularioRegistro.confirm_password.value;
     if (password !== confirmPassword) {
-        return false;
+        throw new Error("Las contraseñas no coinciden");
+        
     }   
     return true;
 }
@@ -220,6 +212,22 @@ const verificarCheckbox = (checkbox, submitButton) => {
 
 
 // validaciones:
+
+const validarEmailExistente = (email) =>{
+
+    const usuarios = obtenerUsuarios();
+    const usuario = usuarios.find(u => u.email === email )
+
+    if (usuario) {
+        throw new Error("Email ya existe");
+    }
+
+    registroError.textContent = '';
+    return true
+
+}
+
+
 const validarCamposVacios = () => {
 
     // 1. Captura todos los datos automáticamente
@@ -230,8 +238,7 @@ const validarCamposVacios = () => {
 
     for (const [key, value] of Object.entries(objetoDatos)) {
         if (!value.trim()) { // Verifica si el valor está vacío o solo tiene espacios
-            submitErrorMensaje.textContent = 'Todos los campos son obligatorios';
-            return false;
+            throw new Error("Todos los campos son obligatorios");
         }
     }
     submitErrorMensaje.textContent = '';
@@ -249,28 +256,21 @@ const validarEmail = (email) => {
             return true;
         }
     }
-    registroError.textContent = 'Email inválido, debe contener "@"';
-    registroError.style.color = 'red';
-    return false;
-
+    throw new Error('Email inválido, debe contener "@"');
 }
 
 
 const validarContraseña = (password) => {
 
     if (password.length < 8) {
-        registroError.textContent = 'La contraseña debe tener al menos 8 caracteres';
-        registroError.style.color = 'red';
-        return false; // La contraseña debe tener al menos 8 caracteres
+        throw new Error("La contraseña debe tener al menos 8 caracteres");
     }
     
     let contador = 0;
 
     for (const char of password) {
         if (char === ' ') {
-            registroError.textContent = 'La contraseña no debe contener espacios o vacíos';
-            registroError.style.color = 'red';
-            return false; // La contraseña no debe contener espacios
+            throw new Error("La contraseña no debe contener espacios o vacíos");
         }
 
         if ('0123456789'.includes(char)) {
@@ -279,21 +279,7 @@ const validarContraseña = (password) => {
     }
 
     if (contador === 0) {
-        registroError.textContent = 'La contraseña debe contener al menos un número';
-        registroError.style.color = 'red';
-        return false; // La contraseña debe contener al menos un número
-    }
-
-    if (password === password.toLowerCase()) {
-        registroError.textContent = 'La contraseña debe contener al menos una letra mayúscula';
-        registroError.style.color = 'red';
-        return false; // La contraseña debe contener al menos una letra mayúscula
-    }
-
-    if (password === password.toUpperCase()) {
-        registroError.textContent = 'La contraseña debe contener al menos una letra minúscula';
-        registroError.style.color = 'red';
-        return false; // La contraseña debe contener al menos una letra minúscula
+        throw new Error("La contraseña debe contener al menos un número");
     }
 
     registroError.textContent = '';
@@ -315,9 +301,7 @@ const validarFechaNacimiento = (fecha) => {
     }
 
     if (edad < 18) {
-        registroError.textContent = 'Debes ser mayor de 18 años para registrarte';
-        registroError.style.color = 'red';
-        return false; // El usuario debe ser mayor de 18 años
+        throw new Error("Debes ser mayor de 18 años para registrarte");
     }
 
     registroError.textContent = '';
@@ -331,6 +315,7 @@ const validarFechaNacimiento = (fecha) => {
 
 // Formulario de Login
 const formularioLogin = document.getElementById('form-login');
+
 
 // Mensajes de error y éxito para el login
 
@@ -348,26 +333,22 @@ formularioLogin.addEventListener('submit', async (e) => {
     const email = formularioLogin.email.value;
     const password = formularioLogin.password.value;
 
-    const usuarios = obtenerUsuarios();
-
-    const usuario = usuarios.find(u => u.email === email);
-
-    if (!usuario || usuario.password !== password) {
-        loginExitoMensaje.textContent = '';
-        loginErrorMensaje.textContent = "Usuario o contraseña incorrectos";
-        loginErrorMensaje.style.color = "red";
-        return;
-    }
-    
-
     try {
-
-        const datosSimulados = { email, password };
 
         loginLoadingMensaje.style.color = "blue";
         loginLoadingMensaje.textContent = 'Iniciando sesión... Cargando...';
         btnLogin.disabled = true; // desactiva el botón de login durante la simulación
+
+        const datosSimulados = { email, password };
         await fakeRequest(datosSimulados);
+
+        const usuarios = obtenerUsuarios();
+        const usuario = usuarios.find(u => u.email === email);
+
+        if (!usuario || usuario.password !== password) {
+            loginExitoMensaje.textContent = '';
+            throw new Error("Usuario o contraseña incorrectos");
+        }
 
         // Login correcto
         loginErrorMensaje.textContent = '';
@@ -379,16 +360,17 @@ formularioLogin.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error('Error durante el login:', error);
+        loginErrorMensaje.textContent = error.message; 
+        loginErrorMensaje.style.color = 'red';
     } finally {
+        loginLoadingMensaje.textContent = '';
         btnLogin.disabled = false; // activa el botón de login después de la simulación
     }
-
 });
 
 // Obtiene los usuarios guardados o devuelve un array vacío
 function obtenerUsuarios() {
     const data = localStorage.getItem("Usuario");
-
     // Si hay datos, los convierte de string a objeto
     // Si no hay nada, devuelve array vacío
     return data ? JSON.parse(data) : [];
