@@ -21,7 +21,7 @@ graph TD
     %% 3. CONTROL DE EXISTENCIA DE CUENTA
     P1_4 -->|Buscar por Email| D2
     D2 -->|Retornar Registro de Usuario| P1_4
-    P1_4 --> C2{¿El Usuario Existe<br>y está ACTIVO?}
+    P1_4 --> C2{¿El Usuario Existe?}
     C2 -->|No| Return_Err2([Mostrar en DOM: Credenciales Incorrectas])
 
     %% 4. COMPROBACIÓN DE CONTRASEÑA (Hasheada)
