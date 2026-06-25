@@ -22,16 +22,21 @@ Este proyecto consiste en un sistema de registro y autenticación de usuarios de
 
 ### Usuario de prueba
 
-Para verificar el funcionamiento sin crear uno nuevo desde cero:
+Para verificar el funcionamiento sin crear uno nuevo desde cero: 
 
-    * **Email:** ejemplo@mail.com
-    * **Contraseña:** password123
+Email: 
+
+    ejemplo@mail.com
+
+Contraseña:
+
+    password123
 
 ---
 
 ## Diagramas de Flujo
 
-*(A continuación se presentan los flujos lógicos descritos en texto)*
+*A continuación se presentan los flujos lógicos descritos en texto*
 
 ### Proceso de Registro
 
