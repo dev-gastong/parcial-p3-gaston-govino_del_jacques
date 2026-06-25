@@ -16,8 +16,8 @@ Este proyecto consiste en un sistema de registro y autenticación de usuarios de
 ## Instrucciones para la ejecución
 
 1. Descargar los archivos.
-2. Vereificar tener todos los archivos en una misma carpeta.
-3. Abre el archivo `index.html` en el navegador.
+2. Verificar tener todos los archivos en una misma carpeta.
+3. Abrir el archivo `index.html` en el navegador.
 4. Probar el registro y el inicio de sesión.
 
 ### Usuario de prueba
