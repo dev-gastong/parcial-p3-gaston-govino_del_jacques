@@ -1,9 +1,12 @@
 
 function fakeRequest(data) {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(data), 1000);
+    setTimeout(() => resolve(data), 3000);
   });
 }
+
+
+
 
 // Creación de los Items en el LocalStorage
 // Logica para crear los items en el LocalStorage si no existen, con un array vacio como valor inicial
@@ -42,6 +45,7 @@ const formateador = new Intl.DateTimeFormat('es-AR', {
     dateStyle: 'short', // '20/06/2026'
     timeStyle: 'medium' // '21:52:25'
 });
+
 
 
 // Mensajes de error y éxito para el usuario
@@ -90,8 +94,8 @@ async function registrarUsuario(formularioRegistro) {
         validarFechaNacimiento(new Date(formularioRegistro.fecha_nacimiento.value))
 
         // Mostrar mensaje de "Cargando..."
-        submitLoadingMensaje.style.color = "blue";
-        submitLoadingMensaje.textContent = 'Procesando registro... Cargando...';
+        registroExito.style.color = "blue";
+        registroExito.textContent = 'Procesando registro... Cargando...';
         submitButton.disabled = true; // desactiva el botón 
 
         // Simular la petición asíncrona (espera 1 segundo)
@@ -374,4 +378,51 @@ function obtenerUsuarios() {
     // Si hay datos, los convierte de string a objeto
     // Si no hay nada, devuelve array vacío
     return data ? JSON.parse(data) : [];
+}
+
+
+// Creacion de usuario de prueba
+
+const usuariosActuales = obtenerUsuarios(); // Reutilizamos también tu función obtenerUsuarios()
+const existeUsuarioPrueba = usuariosActuales.some(u => u.email === 'ejemplo@mail.com');
+
+if (!existeUsuarioPrueba) {
+    const idPersonaPrueba = 1000000; 
+    const idUsuarioPrueba = 1000001;
+
+    // 1. Objetos de prueba
+    const personaPrueba = {
+        id_persona: idPersonaPrueba,
+        fecha_registro: formateador.format(new Date())
+    };
+
+    const personaFisicaPrueba = {
+        id_persona_fisica: idPersonaPrueba,
+        nombre: "Gaston",
+        apellido: "Govino",
+        fecha_nacimiento: "2003-07-15",
+        dni: "45131353"
+    };
+
+    const usuarioPrueba = {
+        id_usuario: idUsuarioPrueba,
+        fk_id_persona_fisica: idPersonaPrueba,
+        nickname: "gaston_ejemplo",
+        password: "password123",
+        email: "ejemplo@mail.com",
+        estado: "ACTIVO",
+        fecha_baja: null
+    };
+
+    const usuarioRolPrueba = {
+        fk_id_usuario: idUsuarioPrueba,
+        fk_id_rol: 1 
+    };
+
+    guardarEnLocalStorage('Persona', personaPrueba);
+    guardarEnLocalStorage('Persona_Fisica', personaFisicaPrueba);
+    guardarEnLocalStorage('Usuario', usuarioPrueba);
+    guardarEnLocalStorage('Usuario_Rol', usuarioRolPrueba);
+
+    console.log("Usuario de prueba inyectado.");
 }

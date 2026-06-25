@@ -1,24 +1,23 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Crucial para el Box Model */
+    box-sizing: border-box; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #f0f4f8; /* Azul muy claro de fondo */
+    background-color: #061e35; /* Azul muy claro de fondo */
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     padding: 20px;
 }
 
 /* --- Contenedor Principal (Dual Horizontal) --- */
 .login-registro-dual {
     width: 100%;
-    max-width: 900px;
+    max-width: 1100px;
 }
 
 .dual-container {
@@ -34,7 +33,7 @@ body {
     background-color: #ffffff; /* Blanco */
     padding: 30px;
     border: 1px solid #d0e1fd; /* Borde azul sutil */
-    border-radius: 12px; /* Bordes redondeados */
+    border-radius: 4px; /* Bordes redondeados */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
 }
 
